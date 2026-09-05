@@ -187,7 +187,7 @@ class ReviewServiceTest {
         AppointmentModel app = agendamento(AppointmentStatus.FINALIZADO);
         mockConsultaValida(app);
         when(reviewRepository.save(any(ReviewModel.class))).thenAnswer(inv -> inv.getArgument(0));
-        when(reviewRepository.findByPrestadorId(perfil.getId())).thenReturn(List.of());
+        when(reviewRepository.findAverageNotaByPrestadorId(perfil.getId())).thenReturn(Optional.empty());
         when(prestadorRepository.save(any(PrestadorModel.class))).thenAnswer(inv -> inv.getArgument(0));
 
         ReviewResponseDTO result = service.criar(dto(tutor.getId(), prestador.getId(), 5), tutor.getEmail());
@@ -252,7 +252,7 @@ class ReviewServiceTest {
 
         when(userRepository.findByEmail(tutor.getEmail())).thenReturn(Optional.of(tutor));
         when(reviewRepository.findById(1L)).thenReturn(Optional.of(review));
-        when(reviewRepository.findByPrestadorId(perfil.getId())).thenReturn(List.of());
+        when(reviewRepository.findAverageNotaByPrestadorId(perfil.getId())).thenReturn(Optional.empty());
         when(prestadorRepository.save(any(PrestadorModel.class))).thenAnswer(inv -> inv.getArgument(0));
 
         service.deletar(1L, tutor.getEmail());

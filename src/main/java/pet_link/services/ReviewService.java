@@ -138,12 +138,7 @@ public class ReviewService {
     }
 
     private void atualizarMediaPrestador(PrestadorModel prestador) {
-        List<ReviewModel> reviews = reviewRepository.findByPrestadorId(prestador.getId());
-
-        double media = reviews.stream()
-                .mapToInt(ReviewModel::getNota)
-                .average()
-                .orElse(0.0);
+        double media = reviewRepository.findAverageNotaByPrestadorId(prestador.getId()).orElse(0.0);
 
         prestador.setAvaliacaoMedia(media);
         prestadorRepository.save(prestador);

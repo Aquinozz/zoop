@@ -2,14 +2,17 @@ package pet_link.repositories;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import pet_link.models.ReviewModel;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<ReviewModel, Long> {
 
-    @EntityGraph(attributePaths = {"tutor", "prestador", "agendamento"})
-    List<ReviewModel> findByPrestadorId(Long prestadorId);
+    @Query("select avg(r.nota) from ReviewModel r where r.prestador.id = :prestadorId")
+    Optional<Double> findAverageNotaByPrestadorId(@Param("prestadorId") Long prestadorId);
 
     @EntityGraph(attributePaths = {"tutor", "prestador", "agendamento"})
     List<ReviewModel> findByTutor_Id(Long tutorId);
