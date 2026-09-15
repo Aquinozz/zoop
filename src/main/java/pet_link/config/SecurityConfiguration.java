@@ -50,9 +50,9 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/favicon.ico").permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/h2-console/**").hasRole("ADMIN")
+                        .requestMatchers("/swagger-ui/**").hasRole("ADMIN")
+                        .requestMatchers("/v3/api-docs/**").hasRole("ADMIN")
                         .requestMatchers("/uploads/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
